@@ -4,3 +4,10 @@
   justify-content: center;
   gap: 10px;
 }
+
+.button-cont {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  gap: 5px;
+}
