@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/michael-sanchez-simple-website/static/css/main.e890dacc.css",
-    "main.js": "/michael-sanchez-simple-website/static/js/main.ae230dbb.js",
+    "main.js": "/michael-sanchez-simple-website/static/js/main.fc14c933.js",
     "index.html": "/michael-sanchez-simple-website/index.html",
     "main.e890dacc.css.map": "/michael-sanchez-simple-website/static/css/main.e890dacc.css.map",
-    "main.ae230dbb.js.map": "/michael-sanchez-simple-website/static/js/main.ae230dbb.js.map"
+    "main.fc14c933.js.map": "/michael-sanchez-simple-website/static/js/main.fc14c933.js.map"
   },
   "entrypoints": [
     "static/css/main.e890dacc.css",
-    "static/js/main.ae230dbb.js"
+    "static/js/main.fc14c933.js"
   ]
 }
