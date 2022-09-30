@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/react-gh-pages/static/css/main.65775261.css",
-    "main.js": "/react-gh-pages/static/js/main.060062c0.js",
-    "index.html": "/react-gh-pages/index.html",
-    "main.65775261.css.map": "/react-gh-pages/static/css/main.65775261.css.map",
-    "main.060062c0.js.map": "/react-gh-pages/static/js/main.060062c0.js.map"
+    "main.css": "/michael-sanchez-simple-website/static/css/main.65775261.css",
+    "main.js": "/michael-sanchez-simple-website/static/js/main.060062c0.js",
+    "index.html": "/michael-sanchez-simple-website/index.html",
+    "main.65775261.css.map": "/michael-sanchez-simple-website/static/css/main.65775261.css.map",
+    "main.060062c0.js.map": "/michael-sanchez-simple-website/static/js/main.060062c0.js.map"
   },
   "entrypoints": [
     "static/css/main.65775261.css",
