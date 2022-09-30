@@ -45,7 +45,7 @@ const InputBox = () => {
     <div className="container">
       <div className="button-cont">
         <button onClick={handleGenerate}>GENERATE & COPY CAPTION</button>
-        <button>{"<-"}</button>
+        <button>{"Erase"}</button>
       </div>
       <TextField
         id="outlined-multiline-flexible"
