@@ -1,11 +1,20 @@
+import { Button, Grid, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const Page2 = () => {
   return (
-    <div>
-      <h2>Page2</h2>
-      <Link to={"/"}>Home</Link>
-    </div>
+    <Grid container spacing={5} textAlign={"center"}>
+      <Grid item sm={12}>
+        <Typography component={"h2"} variant={"h5"}>
+          Page2
+        </Typography>
+      </Grid>
+      <Grid item sm={12}>
+        <Button component={Link} to={"/"}>
+          Home
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 

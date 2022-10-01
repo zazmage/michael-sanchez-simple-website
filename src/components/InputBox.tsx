@@ -1,5 +1,6 @@
-import { TextField } from "@mui/material";
-import React, { ChangeEvent, useState, useEffect } from "react";
+import { Button, Grid, TextField, Typography } from "@mui/material";
+import { ChangeEvent, useState, useEffect } from "react";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import "../styles/inputBox.css";
 
 const InputBox = () => {
@@ -16,6 +17,7 @@ const InputBox = () => {
     DM is best way to contact me.`);
   const [counter, setCounter] = useState<number>(0);
   const [newValue, setNewValue] = useState<string>("");
+  const maxCharacters = 100;
 
   useEffect(() => {
     setCounter(value.length);
@@ -41,32 +43,60 @@ const InputBox = () => {
     setNewValue(formatValue);
   };
 
+  const handleDelete = () => setValue("");
+
   return (
-    <div className="container">
-      <div className="button-cont">
-        <button onClick={handleGenerate}>GENERATE & COPY CAPTION</button>
-        <button>{"Erase"}</button>
-      </div>
-      <TextField
-        id="outlined-multiline-flexible"
-        label="Paste your caption here..."
-        multiline
-        minRows={7}
-        maxRows={10}
-        value={value}
-        onChange={handleChange}
-      />
-      <div>{counter}/2200</div>
-      <h4>This is just for thesting</h4>
-      <TextField
-        id="outlined-multiline-flexible"
-        label="Paste your caption here..."
-        multiline
-        maxRows={4}
-        value={newValue}
-        onChange={handleChange}
-      />
-    </div>
+    <Grid container spacing={3}>
+      <Grid container item sm={12} spacing={2}>
+        <Grid item sm={10}>
+          <Button fullWidth variant="contained" onClick={handleGenerate}>
+            GENERATE & COPY CAPTION
+          </Button>
+        </Grid>
+        <Grid item sm={2}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            onClick={handleDelete}
+          >
+            <BackspaceIcon />
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid container item sm={12}>
+        <Grid item sm={12}>
+          <TextField
+            fullWidth
+            id="outlined-multiline-flexible"
+            label="Paste your caption here..."
+            multiline
+            minRows={7}
+            maxRows={15}
+            value={value}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item sm={12}>
+          <Typography component={"div"} textAlign="center">
+            {counter}/{maxCharacters}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid item sm={12}>
+        <Typography variant="h6" component="h6">
+          This box is just for testing
+        </Typography>
+        <TextField
+          fullWidth
+          id="outlined-multiline-flexible"
+          label="Paste your caption here..."
+          multiline
+          maxRows={4}
+          value={newValue}
+        />
+      </Grid>
+    </Grid>
   );
 };
 

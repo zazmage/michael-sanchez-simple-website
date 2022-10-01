@@ -1,16 +1,25 @@
-import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 import NavBar from "./components/NavBar";
-import "./styles/layout.css";
+import styled from "@emotion/styled";
+
+const MainLayout = styled(
+  "div",
+  {}
+)({
+  display: "flex",
+  minHeight: "100vh",
+  flexDirection: "column",
+});
 
 function App() {
   return (
-    <div>
+    <MainLayout>
       <NavBar />
       <Outlet />
+      <br />
       <Footer />
-    </div>
+    </MainLayout>
   );
 }
 

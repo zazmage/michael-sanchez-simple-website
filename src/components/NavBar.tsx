@@ -37,7 +37,7 @@ const NavBar = () => {
             <MenuIcon />
           </IconButton>
           <Typography
-            variant="h6"
+            variant="h5"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             Instagram Line Break
