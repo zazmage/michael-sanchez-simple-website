@@ -27,23 +27,14 @@ const NavBar = () => {
     <Box sx={{ display: "flex" }}>
       <AppBar position="static" color="transparent" sx={{ boxShadow: "none" }}>
         <Toolbar component="nav">
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h5"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
             Instagram Line Break
           </Typography>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box>
+            <Box>
               {navItems.map((item) => (
                 <Button key={item.name} component={Link} to={item.url}>
                   {item.name}
