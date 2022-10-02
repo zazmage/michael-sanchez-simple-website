@@ -49,7 +49,7 @@ const TextEditor = () => {
     setState({ ...state, open: false });
   };
 
-  const maxCharacters = 100;
+  const maxCharacters = 2200;
   const modules = {
     toolbar: [["bold", "italic"]],
   };
