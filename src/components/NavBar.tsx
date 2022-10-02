@@ -1,22 +1,7 @@
-import {
-  AppBar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 
 const NavBar = () => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
-
   const navItems = [
     { name: "Home", url: "/" },
     { name: "Page 1", url: "page1" },
@@ -36,7 +21,17 @@ const NavBar = () => {
           <Box>
             <Box>
               {navItems.map((item) => (
-                <Button key={item.name} component={Link} to={item.url}>
+                <Button
+                  key={item.name}
+                  component={Link}
+                  variant="outlined"
+                  to={item.url}
+                  sx={{
+                    marginLeft: "5px",
+                    color: "#df3852",
+                    borderColor: "#df3852",
+                  }}
+                >
                   {item.name}
                 </Button>
               ))}

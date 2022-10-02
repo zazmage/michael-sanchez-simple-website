@@ -1,7 +1,13 @@
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Snackbar,
+  SnackbarOrigin,
+  Typography,
+} from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import styled from "@emotion/styled";
 
@@ -12,7 +18,7 @@ const RichTextEditor = styled(
   boxSizing: "border-box",
   width: "100%",
   height: "200px",
-  boxShadow: `0 3px 0px 0px inset #dc2743, 
+  boxShadow: `0 4px 0px 0px inset #dc2743, 
     4px 0 0px 0px inset #dc2743, 
     -4px 0 0px 0px inset #dc2743`,
   div: {
@@ -24,11 +30,26 @@ const RichTextEditor = styled(
   },
 });
 
+interface State extends SnackbarOrigin {
+  open: boolean;
+}
+
 const TextEditor = () => {
   const [value, setValue] = useState<string>("");
   const [plainText, setPlainText] = useState<string>("");
   const [counter, setCounter] = useState<number>(0);
-  const maxCharacters = 3000;
+  const [state, setState] = useState<State>({
+    open: false,
+    vertical: "top",
+    horizontal: "center",
+  });
+  const { vertical, horizontal, open } = state;
+
+  const handleClose = () => {
+    setState({ ...state, open: false });
+  };
+
+  const maxCharacters = 100;
   const modules = {
     toolbar: [["bold", "italic"]],
   };
@@ -48,25 +69,32 @@ const TextEditor = () => {
   useEffect(() => setCounter(plainText.length), [plainText]);
 
   const handleGenerate = () => {
-    const formattedValue = value
-      .replaceAll("<br>", "\n")
-      .replaceAll("<p></p>", "\n")
-      .replaceAll("<p>", "")
-      .replaceAll("</p>", "\n")
-      .replaceAll("\t", " ")
-      .split("\n")
-      .filter((el) => el.trim().length !== 0)
-      .join("\n")
-      .split(" ")
-      .filter((el) => el.trim().length !== 0)
-      .join(" ")
-      .split("\n")
-      .map((el) => el.trim())
-      .join("\n")
-      .replaceAll("\n", "<br>");
-    const blobInput = new Blob([formattedValue], { type: "text/html" });
-    const clipboardItemInput = new ClipboardItem({ "text/html": blobInput });
-    navigator.clipboard.write([clipboardItemInput]);
+    if (counter < maxCharacters) {
+      const formattedValue = value
+        .replaceAll("<br>", "\n")
+        .replaceAll("<p></p>", "\n")
+        .replaceAll("<p>", "")
+        .replaceAll("</p>", "\n")
+        .replaceAll("\t", " ")
+        .split("\n")
+        .filter((el) => el.trim().length !== 0)
+        .join("\n")
+        .split(" ")
+        .filter((el) => el.trim().length !== 0)
+        .join(" ")
+        .split("\n")
+        .map((el) => el.trim())
+        .join("\n")
+        .replaceAll("\n", "<br>");
+      const blobInput = new Blob([formattedValue], { type: "text/html" });
+      const clipboardItemInput = new ClipboardItem({ "text/html": blobInput });
+      navigator.clipboard.write([clipboardItemInput]);
+    }
+    setState({
+      open: true,
+      vertical: "bottom",
+      horizontal: "center",
+    });
   };
 
   const handleDelete = () => {
@@ -98,11 +126,28 @@ const TextEditor = () => {
           <Typography
             component={"div"}
             textAlign="center"
-            variant={counter > maxCharacters ? "body1" : "body2"}
+            variant="body1"
             color={counter > maxCharacters ? "red" : ""}
           >
             {counter}/{maxCharacters}
           </Typography>
+          {counter > maxCharacters && (
+            <Typography textAlign="center" color="red">
+              Character limit reached
+            </Typography>
+          )}
+          <Snackbar
+            autoHideDuration={2000}
+            anchorOrigin={{ vertical, horizontal }}
+            open={open}
+            onClose={handleClose}
+            message={
+              counter > maxCharacters
+                ? "Character limit reached!"
+                : "Copied to clipboard!"
+            }
+            key={vertical + horizontal}
+          />
         </Grid>
       </Grid>
     </Grid>

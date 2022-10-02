@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar";
 import styled from "@emotion/styled";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
-
+import CssBaseline from "@mui/material/CssBaseline";
 const MainLayout = styled(
   "div",
   {}
@@ -14,20 +14,26 @@ const MainLayout = styled(
   flexDirection: "column",
 });
 
-function App() {
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: "#dc2743",
-        dark: "#df3852",
-      },
-      secondary: {
-        main: "#000",
-      },
+const theme = createTheme({
+  palette: {
+    mode: "dark",
+    background: {
+      default: "#222",
     },
-  });
+    primary: {
+      main: "#dc2743",
+      dark: "#df3852",
+    },
+    secondary: {
+      main: "#fff",
+    },
+  },
+});
+
+function App() {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <MainLayout>
         <NavBar />
         <Outlet />
