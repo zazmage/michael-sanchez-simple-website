@@ -1,18 +1,16 @@
 import { Container, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import DropDown from "./DropDown";
-import InputBox from "./InputBox";
+// import InputBox from "./InputBox";
 import Instructions from "./Instructions";
 import TextEditor from "./TextEditor";
+import myLogo from "../assets/hero-icon.svg";
 
 const Home = () => {
   return (
     <Container maxWidth="sm">
       <Box textAlign="center" mb={2}>
-        <img
-          src="https://instagramlinebreak.app/images/hero-icon.svg"
-          alt="Logo Instagram Line Break"
-        />
+        <img src={myLogo} alt="Logo Instagram Line Break" />
       </Box>
 
       <Typography variant="h4" component="h2" textAlign="center" mb={2}>

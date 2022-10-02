@@ -1,7 +1,7 @@
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 import styled from "@emotion/styled";
 
@@ -12,7 +12,6 @@ const RichTextEditor = styled(
   boxSizing: "border-box",
   width: "100%",
   height: "200px",
-  borderRadius: "5px 5px 0 0",
   boxShadow: `0 3px 0px 0px inset #dc2743, 
     4px 0 0px 0px inset #dc2743, 
     -4px 0 0px 0px inset #dc2743`,
@@ -22,17 +21,13 @@ const RichTextEditor = styled(
     borderRight: "3px solid #dc2743",
     borderTop: "none",
     fontSize: "16px",
-    // If you want to apply color to all borders of the text editor
-    // boxShadow: `0 -2px 0 0 inset #dc2743,
-    // 2px 0 0px 0px inset #dc2743,
-    // -2px 0 0px 0px inset #dc2743`,
   },
 });
 
 const TextEditor = () => {
   const [value, setValue] = useState<string>("");
+  const [plainText, setPlainText] = useState<string>("");
   const [counter, setCounter] = useState<number>(0);
-  // const [newValue, setNewValue] = useState<string>("");
   const maxCharacters = 3000;
   const modules = {
     toolbar: [["bold", "italic"]],
@@ -40,25 +35,25 @@ const TextEditor = () => {
   const { quill, quillRef } = useQuill({ modules });
 
   useEffect(() => {
-    setCounter(value.length);
-  }, [value]);
-
-  useEffect(() => {
     if (quill) {
-      quill.on("text-change", () =>
-        setValue(quillRef.current.firstChild.innerHTML)
-      );
+      quill.on("text-change", () => {
+        setValue(quillRef.current.firstChild.innerHTML);
+        setPlainText(
+          quillRef.current.firstChild.innerHTML.replaceAll(/<[^>]*>?/gm, "")
+        );
+      });
     }
   }, [quill, quillRef]);
 
+  useEffect(() => setCounter(plainText.length), [plainText]);
+
   const handleGenerate = () => {
-    console.log("Value: ", value);
     const formattedValue = value
-      .replaceAll("<br>", "\n")
-      .replaceAll("<p></p>", "\n")
-      .replaceAll("<p>", "")
-      .replaceAll("</p>", "")
-      .replaceAll("\t", " ")
+      .replace("<br>", "\n")
+      .replace("<p></p>", "\n")
+      .replace("<p>", "")
+      .replace("</p>", "")
+      .replace("\t", "    ")
       .split("\n")
       .filter((el) => el.trim().length !== 0)
       .join("\n")
@@ -68,16 +63,14 @@ const TextEditor = () => {
       .split("\n")
       .map((el) => el.trim())
       .join("\n");
-    // setNewValue(formattedValue);
-    console.log("Format:", formattedValue);
     const blobInput = new Blob([formattedValue], { type: "text/html" });
     const clipboardItemInput = new ClipboardItem({ "text/html": blobInput });
     navigator.clipboard.write([clipboardItemInput]);
   };
 
   const handleDelete = () => {
-    setValue("");
     quillRef.current.firstChild.innerHTML = "";
+    setValue("");
   };
 
   return (
