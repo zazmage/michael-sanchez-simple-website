@@ -49,11 +49,11 @@ const TextEditor = () => {
 
   const handleGenerate = () => {
     const formattedValue = value
-      .replace("<br>", "\n")
-      .replace("<p></p>", "\n")
-      .replace("<p>", "")
-      .replace("</p>", "")
-      .replace("\t", "    ")
+      .replaceAll("<br>", "\n")
+      .replaceAll("<p></p>", "\n")
+      .replaceAll("<p>", "")
+      .replaceAll("</p>", "")
+      .replaceAll("\t", "    ")
       .split("\n")
       .filter((el) => el.trim().length !== 0)
       .join("\n")
@@ -62,7 +62,8 @@ const TextEditor = () => {
       .join(" ")
       .split("\n")
       .map((el) => el.trim())
-      .join("\n");
+      .join("\n")
+      .replaceAll("\n", "<br>");
     const blobInput = new Blob([formattedValue], { type: "text/html" });
     const clipboardItemInput = new ClipboardItem({ "text/html": blobInput });
     navigator.clipboard.write([clipboardItemInput]);
