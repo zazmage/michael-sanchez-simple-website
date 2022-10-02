@@ -32,6 +32,7 @@ function App() {
         <NavBar />
         <Outlet />
         <br />
+        <br />
         <Footer />
       </MainLayout>
     </ThemeProvider>

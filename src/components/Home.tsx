@@ -3,6 +3,7 @@ import { Box } from "@mui/system";
 import DropDown from "./DropDown";
 import InputBox from "./InputBox";
 import Instructions from "./Instructions";
+import TextEditor from "./TextEditor";
 
 const Home = () => {
   return (
@@ -20,7 +21,8 @@ const Home = () => {
       <Typography variant="subtitle1" component="p" textAlign="center" mb={2}>
         Use this tool to add clean line breaks to your instagram captions
       </Typography>
-      <InputBox />
+      <TextEditor />
+      {/* <InputBox /> */}
       <Instructions />
       <DropDown />
     </Container>
