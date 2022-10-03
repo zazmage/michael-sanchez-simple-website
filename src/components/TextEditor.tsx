@@ -77,7 +77,7 @@ const TextEditor = () => {
 
   const maxCharacters = 2200;
   const modules = {
-    toolbar: [["bold", "italic", "strike"]],
+    toolbar: [["bold", "italic"]],
   };
   const { quill, quillRef } = useQuill({ modules });
 
