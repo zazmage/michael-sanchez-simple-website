@@ -52,7 +52,6 @@ function copyTextToClipboard(text: string) {
   document.body.appendChild(textCont);
   const range = document.createRange();
   range.selectNode(textCont);
-  console.log(range);
   window.getSelection()?.removeAllRanges();
   window.getSelection()?.addRange(range);
   document.execCommand("copy");
