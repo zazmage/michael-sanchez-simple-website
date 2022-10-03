@@ -35,44 +35,30 @@ interface State extends SnackbarOrigin {
 }
 
 function copyTextToClipboard(text: string) {
-  let textArea = document.createElement("textarea");
+  let textCont = document.createElement("div");
+  textCont.style.position = "fixed";
+  textCont.style.top = "0";
+  textCont.style.left = "0";
+  textCont.style.width = "2em";
+  textCont.style.height = "2em";
+  textCont.style.padding = "0";
+  textCont.style.border = "none";
+  textCont.style.outline = "none";
+  textCont.style.boxShadow = "none";
+  textCont.style.background = "transparent";
 
-  // Place in the top-left corner of screen regardless of scroll position.
-  textArea.style.position = "fixed";
-  textArea.style.top = "0";
-  textArea.style.left = "0";
+  textCont.innerHTML = text;
 
-  // Ensure it has a small width and height. Setting to 1px / 1em
-  // doesn't work as this gives a negative w/h on some browsers.
-  textArea.style.width = "2em";
-  textArea.style.height = "2em";
+  document.body.appendChild(textCont);
+  const range = document.createRange();
+  range.selectNode(textCont);
+  console.log(range);
+  window.getSelection()?.removeAllRanges();
+  window.getSelection()?.addRange(range);
+  document.execCommand("copy");
+  window.getSelection()?.removeAllRanges();
 
-  // We don't need padding, reducing the size if it does flash render.
-  textArea.style.padding = "0";
-
-  // Clean up any borders.
-  textArea.style.border = "none";
-  textArea.style.outline = "none";
-  textArea.style.boxShadow = "none";
-
-  // Avoid flash of the white box if rendered for any reason.
-  textArea.style.background = "transparent";
-
-  textArea.value = text;
-
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-
-  try {
-    let successful = document.execCommand("copy");
-    let msg = successful ? "successful" : "unsuccessful";
-    console.log("Copying text command was " + msg);
-  } catch (err) {
-    console.log("Oops, unable to copy");
-  }
-
-  document.body.removeChild(textArea);
+  document.body.removeChild(textCont);
 }
 
 const TextEditor = () => {
@@ -92,7 +78,7 @@ const TextEditor = () => {
 
   const maxCharacters = 2200;
   const modules = {
-    toolbar: [["bold", "italic"]],
+    toolbar: [["bold", "italic", "strike"]],
   };
   const { quill, quillRef } = useQuill({ modules });
 
@@ -125,8 +111,7 @@ const TextEditor = () => {
         .join(" ")
         .split("\n")
         .map((el) => el.trim())
-        .join("\n")
-        .replaceAll(/<[^>]*>?/gm, "");
+        .join("<br>");
       copyTextToClipboard(formattedValue);
     }
     setState({
